@@ -23,23 +23,26 @@ export const FirstStep: React.FC<FirstStepProps> = ({ onUpload }) => {
         action: 'http://83.136.233.81:5000',
         beforeUpload: (file: RcFile) => {
             const format = file.name.split('.')[1];
-            const isJpgOrPng = format === 'doc' || format === 'docx';
-            if (!isJpgOrPng) {
+            const isDocOrDocx = format === 'doc' || format === 'docx';
+
+            if (!isDocOrDocx) {
                 message.error('You can only upload doc/docx file!');
             }
-            return isJpgOrPng;
+
+            return isDocOrDocx;
         },
         onChange(info) {
             const { status, name } = info.file;
             const format = name.split('.')[1];
-            const isJpgOrPng = format === 'doc' || format === 'docx';
-            if (!isJpgOrPng) {
+            const isDocOrDocx = format === 'doc' || format === 'docx';
+
+            if (!isDocOrDocx) {
                 return;
             }
 
             if (status === 'done') {
                 onUpload(info.file.response);
-                message.success(`${info.file.name} загружен успешно!`);
+                message.success(`${info.file.name} — загружен успешно!`);
             } else if (status === 'error') {
                 message.error(`${info.file.name} — ошибка загрузки`);
             }
@@ -48,6 +51,7 @@ export const FirstStep: React.FC<FirstStepProps> = ({ onUpload }) => {
             console.log('Dropped files', e.dataTransfer.files);
         }
     };
+
     return (
         <Container>
             <TitleContainer>
