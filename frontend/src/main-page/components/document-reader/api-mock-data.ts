@@ -1,4 +1,4 @@
-import { ResultsResponse } from '../api/types';
+import { ResultsResponse } from '../../../api';
 
 export const RESULT: ResultsResponse = {
     hasBorder: true,

@@ -1,12 +1,12 @@
 import styled, { css } from 'styled-components';
 import { Typography } from 'antd';
+import { Badge } from 'antd';
 const { Paragraph } = Typography;
 
 export const Wrapper = styled.div`
     background-color: white;
     max-height: 500px;
     overflow: scroll;
-    border: 1px solid #d9d9d9;
     border-radius: 2px;
     position: relative;
 `;
@@ -28,24 +28,32 @@ export const SpinnerWrapper = styled.div`
     justify-content: center;
 `;
 
-export const ParagraphStyled = styled(Paragraph)<{ hasBorder?: boolean }>`
+export const ParagraphStyled = styled(Paragraph)<{
+    isRemovePaddings?: boolean;
+}>`
     padding: 20px;
-    border-radius: 10px;
     line-height: 33px;
-    margin-top: 20px;
     position: relative;
-
     ${(props) =>
-        props.hasBorder &&
-        css`
-            border: 1px dashed gray;
+        props.isRemovePaddings
+            ? css`
+                  padding-top: 0;
+                  padding-bottom: 0;
+              `
+            : css`
+                  padding: 20px;
+              `};
+`;
 
-            &:after {
-                position: absolute;
-                content: 'Текст классификации абзаца';
-                top: -25px;
-                left: 0;
-                font-size: 11px;
-            }
-        `}
+export const BorderStyled = styled.div`
+    position: relative;
+    border-radius: 10px;
+    border: 1px dashed gray;
+    margin-top: 35px;
+    margin-bottom: 10px;
+`;
+
+export const Span = styled(Badge.Ribbon)`
+    position: absolute;
+    top: -13px;
 `;
