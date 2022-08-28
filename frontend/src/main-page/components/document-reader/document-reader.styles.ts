@@ -27,13 +27,13 @@ export const SpinnerWrapper = styled.div`
 `;
 
 export const ParagraphStyled = styled(Paragraph)<{
-    isRemovePaddings?: boolean;
+    $isRemovePaddings?: boolean;
 }>`
     padding: 20px;
     line-height: 33px;
     position: relative;
     ${(props) =>
-        props.isRemovePaddings
+        props.$isRemovePaddings
             ? css`
                   padding-top: 0;
                   padding-bottom: 0;

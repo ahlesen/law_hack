@@ -26,42 +26,51 @@ export const DocumentReader: React.FC<Props> = ({
     // подсветка цветов
     const getHightLightBackground = (value: number) => {
         //value>0.2 - теплый яркий
+        let intepr = '';
         if (value > 0.2) {
-            return 'rgb(255,192,137)';
+            intepr = 'положительный вклад в предсказание модели';
+            return { color: 'rgb(255,192,137)', intepr };
         }
         // 0.2>=value>0.15 - теплый еще ярче
         if (0.2 >= value && value > 0.15) {
-            return 'rgba(255,192,137,0.8)';
+            intepr = 'положительный вклад в предсказание модели';
+            return { color: 'rgba(255,192,137,0.8)', intepr };
         }
 
         // 0.15>=value>0.1 - теплый чуть ярче
         if (0.15 >= value && value > 0.1) {
-            return 'rgba(255,192,137,0.58)';
+            intepr = 'положительный вклад в предсказание модели';
+            return { color: 'rgba(255,192,137,0.58)', intepr };
         }
 
         // 0.1>=value>0 - теплый совсем нежный
         if (0.1 >= value && value > 0) {
-            return 'rgba(255,192,137,0.3)';
+            intepr = 'положительный вклад в предсказание модели';
+            return { color: 'rgba(255,192,137,0.3)', intepr };
         }
 
         // 0.0>=value>-0.1 - холодный совсем нежный
         if (0 >= value && value > -0.1) {
-            return 'rgba(0,187,255,0.2)';
+            intepr = 'отрицательный вклад в предсказание модели';
+            return { color: 'rgba(0,187,255,0.2)', intepr };
         }
 
         // -0.1>=value>-0.15 - холодный чуть ярче
         if (-0.1 >= value && value > -0.15) {
-            return 'rgba(0,187,255,0.64)';
+            intepr = 'отрицательный вклад в предсказание модели';
+            return { color: 'rgba(0,187,255,0.64)', intepr };
         }
 
         // -0.15>=value>-0.2 - холодный еще ярче
         if (-0.15 >= value && value > -0.2) {
-            return 'rgba(0,187,255,0.84)';
+            intepr = 'отрицательный вклад в предсказание модели';
+            return { color: 'rgba(0,187,255,0.84)', intepr };
         }
 
         // -0.2>=value - холодный яркий
         if (-0.2 >= value) {
-            return '#00bbff';
+            intepr = 'отрицательный вклад в предсказание модели';
+            return { color: '#00bbff', intepr };
         }
     };
 
@@ -82,11 +91,10 @@ export const DocumentReader: React.FC<Props> = ({
                 const word = listOfSymbols
                     .slice(part?.[0].start, part?.[0].end)
                     .join('');
+                const colors = getHightLightBackground(part?.[0].value);
                 return (
-                    <MarkStyled
-                        color={getHightLightBackground(part?.[0].value) as any}
-                    >
-                        <Tooltip placement="top" title={part?.[0].value}>
+                    <MarkStyled color={colors?.color || ''}>
+                        <Tooltip placement="top" title={colors?.intepr || ''}>
                             {word}
                         </Tooltip>
                     </MarkStyled>
@@ -125,7 +133,7 @@ export const DocumentReader: React.FC<Props> = ({
                         const paragraph = (
                             <ParagraphStyled
                                 key={index}
-                                isRemovePaddings={item.class === '0'}
+                                $isRemovePaddings={item.class === '0'}
                             >
                                 {formatText(item.text, index, item)}
                             </ParagraphStyled>
