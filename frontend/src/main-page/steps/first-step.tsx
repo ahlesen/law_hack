@@ -22,23 +22,10 @@ export const FirstStep: React.FC<FirstStepProps> = ({ onUpload }) => {
         multiple: false,
         action: 'http://83.136.233.81:5000',
         beforeUpload: (file: RcFile) => {
-            const format = file.name.split('.')[1];
-            const isDocOrDocx = format === 'doc' || format === 'docx';
-
-            if (!isDocOrDocx) {
-                message.error('You can only upload doc/docx file!');
-            }
-
-            return isDocOrDocx;
+            return true;
         },
         onChange(info) {
-            const { status, name } = info.file;
-            const format = name.split('.')[1];
-            const isDocOrDocx = format === 'doc' || format === 'docx';
-
-            if (!isDocOrDocx) {
-                return;
-            }
+            const { status } = info.file;
 
             if (status === 'done') {
                 onUpload(info.file.response);

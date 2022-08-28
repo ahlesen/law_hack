@@ -10,10 +10,12 @@ type Span = {
     type: string;
 };
 
-type SpanNew = {
+export type SpanNew = {
     start: number;
     end: number;
     type: string;
+    value: number;
+    text: string;
 };
 
 export interface ResultsResponse {
