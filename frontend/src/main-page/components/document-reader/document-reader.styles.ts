@@ -5,8 +5,6 @@ const { Paragraph } = Typography;
 
 export const Wrapper = styled.div`
     background-color: white;
-    max-height: 500px;
-    overflow: scroll;
     border-radius: 2px;
     position: relative;
 `;

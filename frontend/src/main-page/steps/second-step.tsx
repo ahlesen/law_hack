@@ -30,7 +30,6 @@ export const SecondStep: React.FC<Props> = ({
         return null;
     }
     const onChange = (key: string) => {
-        console.log(key);
     };
     return (
         <>

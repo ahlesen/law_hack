@@ -40,7 +40,7 @@ const columns = [
         dataSpan: 1
     },
     {
-        title: 'Уверенность модели в классе',
+        title: 'Уверенность модели в классе %',
         dataIndex: 'model_confident',
         key: 'model_confident',
         dataSpan: 1
