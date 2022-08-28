@@ -12,3 +12,7 @@
 2) Загрузите файл в формате docx
 3) Дождитесь расчета алгоритма
 
+## для работы ноутбуков и backend
+
+1) скачиваем веса модели bert https://drive.google.com/file/d/1wrFC0DUfyQO4FE_86aZe3a_CKZxYB9TW/view?usp=sharing
+2) кладем в папку models/
