@@ -29,7 +29,7 @@ ALLOWED_EXTENSIONS = {"docx", "doc"}
 app = Flask(__name__)
 CORS(app, support_credentials=True)
 app.config["UPLOAD_FOLDER"] = UPLOAD_FOLDER
-
+app.config['SECRET_KEY'] = '150b7d4f98b5147956abd504fea4084d697665a5c6e720fc'
 
 def allowed_file(filename):
     return "." in filename and filename.rsplit(".", 1)[1].lower() in ALLOWED_EXTENSIONS
@@ -43,13 +43,11 @@ LOGREG_MODEL_PATH = "models/logreg_model.pickle"
 model_tfidf = pickle.load(open(LOGREG_MODEL_PATH, "rb"))
 
 
-SVM_MODEL_PATH = "models/svm_model.pickle"
-model_svm = pickle.load(open(SVM_MODEL_PATH, "rb"))
+ensamble_MODEL_PATH = "models/ensamble_model.pickle"
+model_ensamble = pickle.load(open(ensamble_MODEL_PATH, "rb"))
 ### UPLOAD LIME_explainer
 c_tfidf = make_pipeline(tfidf_transformer, model_tfidf)
-# c_svm = make_pipeline(tfidf_transformer, model_svm)
-
-explainer = LimeTextExplainer(class_names=[i for i in range(40)])
+# c_ensamble = make_pipeline(tfidf_transformer, model_ensamble)
 
 ###UPLOAD_BERT
 device = "cpu"
@@ -300,7 +298,10 @@ def get_doc_analysis(fullText, real_start_real, end_start, y_pred, s, all_spans)
     return doc_analysis
 
 
-def get_spans(target_data, ref_text, y_pred, c, explainer):
+def get_spans(target_data, ref_text, y_pred, c):
+
+    explainer = LimeTextExplainer(class_names=[i for i in range(40)])
+    
     all_spans = []
     for idx in tqdm(range(len(ref_text))):
         if y_pred[idx] == 0:
@@ -313,12 +314,13 @@ def get_spans(target_data, ref_text, y_pred, c, explainer):
 
         spans_elem = []
         for key_word in key_words:
-            entity_ = {}
-            entity_["start"] = target_data[idx].lower().index(key_word[0])
-            entity_["end"] = entity_["start"] + len(key_word[0])
-            entity_["value"] = key_word[1]
-            entity_["text"] = key_word[0]
-            spans_elem.append(entity_)
+            if len(key_word[0]) >= 5:
+                entity_ = {}
+                entity_["start"] = target_data[idx].lower().index(key_word[0])
+                entity_["end"] = entity_["start"] + len(key_word[0])
+                entity_["value"] = key_word[1]
+                entity_["text"] = key_word[0]
+                spans_elem.append(entity_)
         all_spans.append(spans_elem)
     return all_spans
 
@@ -357,7 +359,7 @@ def upload_file():
             if len(y_pred1) != len(fullText[real_start_real:end_start]):
                 print("ERORR len y_pred & full_text segmented")
 
-            all_spans1 = get_spans(target_data, ref_text, y_pred1, c_tfidf, explainer)
+            all_spans1 = get_spans(target_data, ref_text, y_pred1, c_tfidf)
 
             doc_analysis1 = get_doc_analysis(
                 fullText, real_start_real, end_start, y_pred1, probas1, all_spans1
@@ -374,14 +376,14 @@ def upload_file():
 
             ### pred for model2
             y_pred2, y_proba2 = model_sklearn_inference(
-                ref_text=ref_text, text_transformer=tfidf_transformer, model=model_svm
+                ref_text=ref_text, text_transformer=tfidf_transformer, model=model_ensamble
             )
             doc_ok2, doc_report2, probas2 = get_doc_info(y_pred2, y_proba2)
             # make contract doc_analysis2
             if len(y_pred2) != len(fullText[real_start_real:end_start]):
                 print("ERORR len y_pred & full_text segmented")
 
-            # all_spans2 = get_spans(target_data, ref_text, y_pred2, c_svm, explainer)
+            # all_spans2 = get_spans(target_data, ref_text, y_pred2, c_ensamble)
             all_spans2 = [[] for _ in range(len(y_pred2))]
 
             doc_analysis2 = get_doc_analysis(
@@ -405,7 +407,7 @@ def upload_file():
             doc_ok_bert, doc_report_bert, probas_bert = get_doc_info(
                 y_pred_bert, y_proba_bert, mode="bert"
             )
-            # make contract doc_analysis2
+            # make contract doc_analysis_bert
             if len(y_pred_bert) != len(fullText[real_start_real:end_start]):
                 print("ERORR len y_pred & full_text segmented")
 
