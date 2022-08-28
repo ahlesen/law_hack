@@ -7,9 +7,10 @@ const { TabPane } = Tabs;
 interface Props {}
 
 export const MainPage: React.FC<Props> = () => {
-    const { model1, model2, setResults } = useResults();
+    const { model1, model2, model3, setResults } = useResults();
 
     useEffect(() => {
+        // скроллинг после получения данных с сервера (рабоатет на любой модельке)
         if (model1.okBlock && document !== undefined) {
             document
                 .getElementById('id')
@@ -23,7 +24,7 @@ export const MainPage: React.FC<Props> = () => {
                 <FirstStep onUpload={setResults} />
             </FirstStepWrapper>
             <div id="id">
-                {model1.okBlock && model2.okBlock && (
+                {model1.okBlock && model2.okBlock && model3.okBlock && (
                     <TabsContainer>
                         <Tabs centered>
                             <TabPane tab="Модель 1" key="1">
@@ -40,6 +41,14 @@ export const MainPage: React.FC<Props> = () => {
                                     reportData={model2.results}
                                     okayBlockData={model2.okBlock}
                                     analyseData={model2.analysis}
+                                />
+                            </TabPane>
+                            <TabPane tab="Модель 3" key="3">
+                                <SecondStep
+                                    isShow={true}
+                                    reportData={model3.results}
+                                    okayBlockData={model3.okBlock}
+                                    analyseData={model3.analysis}
                                 />
                             </TabPane>
                         </Tabs>

@@ -23,6 +23,7 @@ export const DocumentReader: React.FC<Props> = ({
 }) => {
     if (!analys) return null;
 
+    // подсветка цветов
     const getHightLightBackground = (value: number) => {
         //value>0.2 - теплый яркий
         if (value > 0.2) {

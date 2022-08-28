@@ -52,7 +52,9 @@ export const SecondStep: React.FC<Props> = ({
             <ResultsContainer>
                 <Tabs onChange={onChange} centered>
                     <TabPane tab="Отчёт" key="1">
-                        <ReportTable data={reportData} />
+                        <DocumentContainer>
+                            <ReportTable data={reportData} />
+                        </DocumentContainer>
                     </TabPane>
                     <TabPane tab="Анализ документа" key="2">
                         <DocumentContainer>

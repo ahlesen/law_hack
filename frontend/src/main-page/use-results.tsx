@@ -13,6 +13,11 @@ export const useResults = () => {
     const [okBlock2, setOkBlock2] = useState<OkBlock | undefined>();
     const [analysis2, setAnalysis2] = useState<Analysis[] | undefined>();
 
+    // стейт приложения. модель 3:
+    const [results3, setResults3] = useState<Source[]>([]);
+    const [okBlock3, setOkBlock3] = useState<OkBlock | undefined>();
+    const [analysis3, setAnalysis3] = useState<Analysis[] | undefined>();
+
     const handleProcessResults = (data: ProcessResponse) => {
         const computedSourceSet: Source[] =
             data.model1.doc_report.class_name.map((item, index) => {
@@ -43,6 +48,21 @@ export const useResults = () => {
         setOkBlock2(data.model2.doc_ok);
         setResults2(computedSourceSet2);
         setAnalysis2(data.model2.doc_analysis);
+
+        const computedSourceSet3: Source[] =
+            data.model1.doc_report.class_name.map((item, index) => {
+                return {
+                    key: index.toString(),
+                    class: item.toString(),
+                    subject: data.model2.doc_report.subject[index],
+                    model_confident:
+                        data.model2.doc_report.model_confident[index]
+                };
+            });
+
+        setOkBlock3(data.model3.doc_ok);
+        setResults3(computedSourceSet3);
+        setAnalysis3(data.model3.doc_analysis);
     };
 
     return {
@@ -56,6 +76,11 @@ export const useResults = () => {
             results: results2,
             okBlock: okBlock2,
             analysis: analysis2
+        },
+        model3: {
+            results: results3,
+            okBlock: okBlock3,
+            analysis: analysis3
         }
     };
 };

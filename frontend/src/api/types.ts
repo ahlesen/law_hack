@@ -55,4 +55,5 @@ export type Content = {
 export interface ProcessResponse {
     model1: Content;
     model2: Content;
+    model3: Content;
 }

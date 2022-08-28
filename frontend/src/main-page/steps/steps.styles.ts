@@ -39,5 +39,4 @@ export const ResultsContainer = styled.div`
 export const StatisticContainer = styled.div`
     display: flex;
     justify-content: center;
-    margin: 10px 35px 0;
 `;
