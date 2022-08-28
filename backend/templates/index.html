@@ -1,43 +1,13 @@
-<!DOCTYPE html>
-<html >
-<head>
-  <meta charset="UTF-8">
-  <title>Deployment Tutorial 1</title>
-  <link href='https://fonts.googleapis.com/css?family=Pacifico' rel='stylesheet' type='text/css'>
-<link href='https://fonts.googleapis.com/css?family=Arimo' rel='stylesheet' type='text/css'>
-<link href='https://fonts.googleapis.com/css?family=Hind:300' rel='stylesheet' type='text/css'>
-<link href='https://fonts.googleapis.com/css?family=Open+Sans+Condensed:300' rel='stylesheet' type='text/css'>
-<link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
-  
-</head>
-
-<body style="background: #000;">
- <div class="login">
-	<h1>Text NER</h1>
-
-     <!-- Main Input For Receiving Query to our ML -->
-    <form action="{{ url_for('predict')}}"method="post">
-		<input type="text" name="Input text" placeholder="input text" required="required" />
-    
-
-        <button type="submit" class="btn btn-primary btn-block btn-large">Predict NER</button>
+<!doctype html>
+<html>
+  <head>
+    <title>File Upload</title>
+  </head>
+  <body>
+    <h1>File Upload</h1>
+    <form method="POST" action="" enctype="multipart/form-data">
+      <p><input type="file" name="file"></p>
+      <p><input type="submit" value="Submit"></p>
     </form>
-
-   <br>
-   <br>
-   <!-- <textarea name="content"
-    placeholder="Message content"
-    rows="15"
-    cols="50"
-    >{{ prediction_text }}</textarea> -->
-   <!-- {{ prediction_text }} -->
-   {{ prediction_text }}
- </div>
-<!-- <body>
-    <div> 
-        {{content}}
-    </div>
-</body> -->
-
-</body>
+  </body>
 </html>
