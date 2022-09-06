@@ -35,7 +35,7 @@ export const useResults = () => {
         setAnalysis(data.model1.doc_analysis);
 
         const computedSourceSet2: Source[] =
-            data.model1.doc_report.class_name.map((item, index) => {
+            data.model2.doc_report.class_name.map((item, index) => {
                 return {
                     key: index.toString(),
                     class: item.toString(),
@@ -50,13 +50,13 @@ export const useResults = () => {
         setAnalysis2(data.model2.doc_analysis);
 
         const computedSourceSet3: Source[] =
-            data.model1.doc_report.class_name.map((item, index) => {
+            data.model3.doc_report.class_name.map((item, index) => {
                 return {
                     key: index.toString(),
                     class: item.toString(),
-                    subject: data.model2.doc_report.subject[index],
+                    subject: data.model3.doc_report.subject[index],
                     model_confident:
-                        data.model2.doc_report.model_confident[index]
+                        data.model3.doc_report.model_confident[index]
                 };
             });
 
